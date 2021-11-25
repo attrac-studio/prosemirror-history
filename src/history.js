@@ -403,6 +403,9 @@ export function history(config) {
         return new HistoryState(Branch.empty, Branch.empty, null, 0)
       },
       apply(tr, hist, state) {
+        if (tr.getMeta('ClearHistory')) {
+          return new HistoryState(Branch.empty, Branch.empty, null, 0)
+        }
         return applyTransaction(hist, state, tr, config)
       }
     },
