@@ -394,13 +394,13 @@ const closeHistoryKey = new PluginKey("closeHistory")
 //     aren't adjacent, a new group is always started.
 export function history(config) {
   config = {depth: config && config.depth || 100,
-            newGroupDelay: config && config.newGroupDelay || 500}
+            newGroupDelay: config && config.newGroupDelay || 500, historyState: config && config.historyState || null}
   return new Plugin({
     key: historyKey,
 
     state: {
       init() {
-        return new HistoryState(Branch.empty, Branch.empty, null, 0)
+        return config.historyState || new HistoryState(Branch.empty, Branch.empty, null, 0)
       },
       apply(tr, hist, state) {
         if (tr.getMeta('ClearHistory')) {
